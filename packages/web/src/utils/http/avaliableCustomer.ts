@@ -1,3 +1,4 @@
+import type { dataList } from '../../../env'
 import { http } from './http'
 
 export const getAvaliableCustomer = async () => {

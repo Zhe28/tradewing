@@ -1,25 +1,19 @@
 <template>
-  <a-layout style="min-height: 100vh">
+  <a-layout>
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <a-menu
-        @select="handleSelect"
-        v-model:selectedKeys="selectedKeys"
-        theme="dark"
-        mode="inline"
-        :items="menus"
-      >
+      <a-menu @select="handleSelect" v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" :items="menus">
       </a-menu>
     </a-layout-sider>
-    <a-layout>
+    <a-layout class="h-screen">
       <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0">
+      <a-layout-content style="height:  calc(100vh - 64px); overflow-y: hidden;">
+        <!-- <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item>User</a-breadcrumb-item>
           <a-breadcrumb-item>Bill</a-breadcrumb-item>
-        </a-breadcrumb>
-        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+        </a-breadcrumb> -->
+        <el-scrollbar :style="{ minHeight: '360px', padding: '10px' }">
           <router-view />
-        </div>
+        </el-scrollbar>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -54,7 +48,7 @@ const selectedKeys = ref<string[]>(['/available-customer'])
 
 // 菜单选中事件处理
 function handleSelect({ item, key, selectedKeys }) {
-  console.log(`menu switch ->`, item, key, selectedKeys)
+  // console.log(`menu switch ->`, item, key, selectedKeys)
   router.push(key)
 }
 

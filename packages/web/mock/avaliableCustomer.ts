@@ -1,5 +1,6 @@
 import type { MockMethod } from 'vite-plugin-mock'
 import { faker } from '@faker-js/faker'
+import type { dataList, record, supplier, supplierProductInfo } from '../env.d'
 
 function customer(dateListNum = 100) {
   const dateList: dataList[] = []

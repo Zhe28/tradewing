@@ -1,4 +1,4 @@
-import { getAvaliableCustomer } from '@/utils/http/api'
+import { getAvaliableCustomer } from '@/utils/http/avaliableCustomer'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -7,13 +7,30 @@ export const useAvaliableCustomerStore = defineStore('AvaliableCustomer', () => 
   const data = ref<dataList[]>([])
   // 定义的 columns
   const columns = ref([
+    { 
+      title: '客户名称', 
+      width: 150, 
+      dataIndex: 'name',
+       key: 'name', 
+       fixed: 'left' ,
+       filters: [],
+       filterSearch: true,
+       filterMode: 'menu',
+       filterMultiple: true,
+       onFilter: (value: any, record: any) => record.name.indexOf(value) === 0,
+       sorter: (a: dataList, b: dataList) => {
+         // console.log("sort data -->", a, b);
+         return a.name.length - b.name.length
+       },
+      //  sortDirections: ['descend', 'ascend'],
+      },
     {
       title: '国家',
-      width: 100,
+      width: 150,
       dataIndex: 'county',
       key: 'county',
-      fixed: 'left',
-      align: 'center',
+      // fixed: 'left',
+      align: 'left',
       filters: [],
       filterSearch: true,
       filterMultiple: true,
@@ -24,18 +41,17 @@ export const useAvaliableCustomerStore = defineStore('AvaliableCustomer', () => 
       },
       sortDirections: ['descend', 'ascend'],
     },
-    { title: '客户名称', width: 100, dataIndex: 'name', key: 'name', fixed: 'left' },
-    { title: '询价产品', dataIndex: 'product', key: 'product' },
-    { title: '开始联系时间', dataIndex: 'contact-time', key: 'contact-time' },
-    { title: '客户来源', dataIndex: 'source', key: 'source' },
-    { title: '跟进方式', dataIndex: 'contact-type', key: 'contact-type' },
-    { title: '客户邮箱', dataIndex: 'email', key: 'email' },
-    { title: 'whatsup/wechat', dataIndex: 'whatsup/wechat', key: 'whatsup/wechat' },
-    { title: '客户电话', dataIndex: 'phone', key: 'phone' },
-    { title: '客户类型', dataIndex: 'customer-type', key: 'customer-type' },
+    { title: '询价产品',width: 150, dataIndex: 'product', key: 'product' },
+    { title: '开始联系时间',width: 150, dataIndex: 'contact-time', key: 'contact-time' },
+    { title: '客户来源',width: 100, dataIndex: 'source', key: 'source' },
+    { title: '跟进方式',width: 100, dataIndex: 'contact-type', key: 'contact-type' },
+    { title: '客户邮箱',width: 200, dataIndex: 'email', key: 'email' },
+    { title: 'whatsup/wechat',width: 200, dataIndex: 'whatsup/wechat', key: 'whatsup/wechat' },
+    { title: '客户电话',width: 150, dataIndex: 'phone', key: 'phone' },
+    { title: '客户类型',width: 80, dataIndex: 'customer-type', key: 'customer-type' },
     { title: '公司名称', dataIndex: 'company', key: 'company' },
     { title: '公司官网', dataIndex: 'website', key: 'website' },
-    { title: '备注', dataIndex: 'remark', key: 'remark' },
+    { title: '备注', dataIndex: 'remark', key: 'remark', width: 200 },
     {
       title: '处理进度',
       dataIndex: 'status',
