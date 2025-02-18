@@ -12,7 +12,11 @@
           <a-breadcrumb-item>Bill</a-breadcrumb-item>
         </a-breadcrumb> -->
         <el-scrollbar :style="{ minHeight: '360px', padding: '10px' }">
-          <router-view />
+          <router-view v-slot="{ Component }">
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
+          </router-view>
         </el-scrollbar>
       </a-layout-content>
     </a-layout>

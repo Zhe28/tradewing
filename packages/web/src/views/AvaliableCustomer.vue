@@ -4,7 +4,27 @@
     <a-button type="primary">删除</a-button>
   </a-space>
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 2100, y: 700 }">
-    <template #bodyCell="{ column, record }">
+
+    <!-- filter dropdown -->
+    <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
+      <div v-if="column.key === 'contact-time'">
+        <a-range-picker v-model:value="selectedKeys[0]" @change="() => setSelectedKeys()" />
+        <a-input ref="searchInput" :placeholder="`Search ${column.dataIndex}`" :value="selectedKeys[0]"
+          @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+          @pressEnter="handleEnterdown(selectedKeys, confirm, column.dataIndex)" />
+      </div>
+    </template>
+    <!-- headercell -->
+    <!-- <template #headerCell="{ column }">
+      <div v-if="column.key === 'contact-time'">
+        <div @click="contactTime.show = !contactTime.show">{{ column.title }}</div>
+
+        <a-range-picker v-model:value="contactTime.data" v-if="contactTime.show" />
+      </div>
+    </template> -->
+
+    <!-- bodycell -->
+    <template #bodyCell="{ column, record, text }">
       <div v-if="column.key === 'county'" size="large">
         <el-text truncated>
           {{ record.county }}
@@ -20,6 +40,13 @@
           {{ record.product }}
         </el-text>
       </div>
+      <span v-if="state.searchText && state.searchedColumn === column.dataIndex">
+        <template v-for="(fragment, i) in text
+          .toString()
+          .split(new RegExp(`(?<=${state.searchText})|(?=${state.searchText})`, 'i'))">
+          {{ fragment }}
+        </template>
+      </span>
       <div v-if="column.key === 'contact-time'" size="large">
         <el-text size="large" truncated>
           {{ record['contact-time'] }}
@@ -80,11 +107,12 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useAvaliableCustomerStore } from '@/stores/AvaliableCustomerStore'
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
+import type { dataList } from '../../env';
 
 const avaliableCustomer = useAvaliableCustomerStore();
 const { data, columns } = storeToRefs(avaliableCustomer)
-
+const state = ref({ searchText: '', searchedColumn: '' })
 // 监听数据更新， 如果data 更新， 对应的 filters 也更新
 watch(data, async () => {
   const dataindexFilter = ['county', 'status', 'name'] as (keyof dataList)[]
@@ -95,6 +123,34 @@ watch(data, async () => {
 // 获取 http 请求的数据
 avaliableCustomer.updateData();
 
+function handleChange(e, setSetlectKeys) {
+  console.log(e, setSetlectKeys);
 
+}
+function handleEnterdown(selectedKeys, confirm, dataIndex) {
+  confirm()
+  state.value.searchText = selectedKeys[0]
+  state.value.searchedColumn = dataIndex
+}
 // 重置filter 内容
 </script>
+
+<!-- interface FilterDropdownProps {
+  prefixCls: string;
+  setSelectedKeys: (selectedKeys: Key[]) => void;
+  selectedKeys: Key[];
+  confirm: (param?: FilterConfirmProps) => void;
+  clearFilters?: (param?: FilterResetProps) => void;
+  filters?: ColumnFilterItem[];
+  visible: boolean;
+  column: ColumnType;
+}
+
+interface FilterConfirmProps {
+  closeDropdown: boolean;
+}
+
+interface FilterResetProps {
+  confirm?: boolean;
+  closeDropdown?: boolean;
+} -->
