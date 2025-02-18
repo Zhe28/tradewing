@@ -7,11 +7,13 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 
 // antd 自动引入
+// element 自动引入
 import Components from 'unplugin-vue-components/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver, ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // mock
 import { viteMockServe } from 'vite-plugin-mock'
+import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -24,11 +26,15 @@ export default defineConfig({
       mockPath: 'mock',
       enable: true,
     }),
+    AutoImport({
+      resolvers: ElementPlusResolver(),
+    }),
     Components({
       resolvers: [
         AntDesignVueResolver({
           importStyle: 'less',
         }),
+        ElementPlusResolver(),
       ],
     }),
   ],
