@@ -1,29 +1,44 @@
 <template>
-  <a-row :gutter="16">
-    <a-col :span="12">
-      <a-statistic-countdown
-        title="Countdown"
-        :value="deadline"
-        style="margin-right: 50px"
-        @finish="onFinish"
-      />
-    </a-col>
-    <a-col :span="12">
-      <a-statistic-countdown
-        title="Million Seconds"
-        :value="deadline"
-        format="HH:mm:ss:SSS"
-        style="margin-right: 50px"
-      />
-    </a-col>
-    <a-col :span="24" style="margin-top: 32px">
-      <a-statistic-countdown title="Day Level" :value="deadline" format="D 天 H 时 m 分 s 秒" />
-    </a-col>
-  </a-row>
+  <div>
+    <a-table :columns="supplierColumns" :data-source="suppliers" :scroll="{ x: 1500, y: 1000 }">
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'name'">
+          <el-text truncated>{{ record.name }}</el-text>
+        </template>
+
+        <template v-if="column.dataIndex === 'phone'">
+          <el-text truncated>{{ record.phone }}</el-text>
+        </template>
+
+        <template v-if="column.dataIndex === 'email'">
+          <el-text truncated>{{ record.email }}</el-text>
+        </template>
+
+        <template v-if="column.dataIndex === 'address'">
+          <el-text truncated>{{ record.address }}</el-text>
+        </template>
+
+        <template v-if="column.dataIndex === 'remark'">
+          <el-text truncated line-clamp="2">{{ record.remark }}</el-text>
+        </template>
+
+        <template v-if="column.dataIndex === 'product'">
+          <a-tag v-for="product in record.product" :key="product" :color="product.color">
+            {{ product.product }}
+          </a-tag>
+        </template>
+      </template>
+    </a-table>
+  </div>
 </template>
-<script lang="ts" setup>
-const onFinish = () => {
-  console.log('finished!')
-}
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30
+
+<script setup lang="ts">
+import { useSupplierStore } from "@/stores/SupplierStore"
+import { storeToRefs } from "pinia";
+
+const supplierStore = useSupplierStore();
+const { suppliers, supplierColumns } = storeToRefs(supplierStore)
+
+// 开始更新数据
+supplierStore.updateSuppliers()
 </script>
