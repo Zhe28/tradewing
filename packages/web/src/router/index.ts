@@ -1,4 +1,3 @@
-import AvaliableCustomer from '@/views/AvaliableCustomer.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -7,17 +6,33 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/Dashboard.vue'),
+      component: () => import('@/views/Dashboard/Index.vue'),
     },
     {
       path: '/available-customer',
       name: 'available-customer',
-      component: AvaliableCustomer,
+      component: ()=>import('@/views/AvaliableCustomer/Index.vue'),
     },
     {
       path: '/supplier',
       name: 'supplier',
-      component: () => import('../views/Supplier.vue'),
+      component: () => import('@/views/Supplier.vue'),
+    },
+    {
+      path: '/prototype',
+      name: 'prototype',
+      redirect: '/prototype/dashboard',
+      children: [
+        {
+          path: 'dashboard',
+          component: () => import('@/views/prototype/Dashboard.vue'),
+        },
+        {
+          //   增加 supplier 原型
+          path: 'supplier',
+          component: () => import('@/views/prototype/Supplier.vue'),
+        },
+      ],
     },
   ],
 })

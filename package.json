@@ -2,10 +2,10 @@
   "name": "tradewing",
   "module": "index.ts",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "^1.2.4"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.8.2"
   },
   "type": "module",
   "workspaces": [

@@ -6,6 +6,8 @@ import type { dataList, record } from '../../env'
 export const useAvaliableCustomerStore = defineStore('AvaliableCustomer', () => {
   // 定义的数据集
   const data = ref<dataList[]>([])
+
+  updateData()
   // 定义的 columns
   const columns = ref([
     {

@@ -1,5 +1,5 @@
 <template>
-  <a-layout>
+  <a-layout v-if="!route.fullPath.startsWith('/prototype')">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
       <a-menu @select="handleSelect" v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" :items="menus">
       </a-menu>
@@ -11,7 +11,7 @@
           <a-breadcrumb-item>User</a-breadcrumb-item>
           <a-breadcrumb-item>Bill</a-breadcrumb-item>
         </a-breadcrumb> -->
-        <el-scrollbar :style="{ minHeight: '360px', padding: '10px' }">
+        <el-scrollbar :style="{ minHeight: '360px', paddingTop: '10px' }">
           <router-view v-slot="{ Component }">
             <keep-alive>
               <component :is="Component" />
@@ -21,6 +21,7 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
+  <router-view v-else/>
 </template>
 <script lang="ts" setup>
 import { MailOutlined, PhoneOutlined, AreaChartOutlined } from '@ant-design/icons-vue'
@@ -28,6 +29,7 @@ import { ref, h, watch } from 'vue'
 import type { ItemType } from 'ant-design-vue'
 import { useRoute, useRouter } from 'vue-router'
 
+console.log(useRoute())
 // 菜单列表数据
 const menus = ref<ItemType[]>([
   {
