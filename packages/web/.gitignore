@@ -32,3 +32,6 @@ coverage
 ## auto import 
 auto-imports.d.ts
 components.d.ts
+
+pnpm-lock.yaml
+bun.lockb
