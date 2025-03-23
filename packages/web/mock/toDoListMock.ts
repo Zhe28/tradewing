@@ -153,8 +153,8 @@ export default [
     url: '/api/todos/:id',
     method: 'delete',
     response: (req) => {
-      const { id } = req.params
-
+      const id = req.query?.id
+      if(!id) return { code: 400, message: '无效的请求' }
       // 在所有数组中查找并删除
       const todoIndex = allTodos.findIndex((todo) => todo.id === id)
 

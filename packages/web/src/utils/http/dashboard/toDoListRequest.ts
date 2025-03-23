@@ -46,11 +46,11 @@ const updateTodo = async (id: string, todo: todoType) => {
 // 删除待办事项
 const deleteTodo = async (id: string) => {
   try {
-    await http.delete(`/api/todos/${id}`)
-    return true
+    const response = await http.delete<responseType<unknown>>(`/api/todos/${id}`)
+    return response.data
   } catch (error) {
     console.error('删除待办事项失败', error)
-    return false
+    return null
   }
 }
 

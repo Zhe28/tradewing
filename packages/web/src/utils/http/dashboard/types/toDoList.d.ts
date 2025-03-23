@@ -2,7 +2,7 @@ type statusType = 'completed' | 'inProgress' | 'expired'
 
 interface responseType<T> {
   code: number
-  data: T
+  data?: T
   message: string
 }
 
