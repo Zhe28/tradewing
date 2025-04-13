@@ -1,0 +1,21 @@
+{
+  "version": "1.3.0",
+  "configurations": [
+    {
+      "name": "Chrome debug",
+      "port": 9222,
+      "request": "attach",
+      "type": "chrome",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Edge debug",
+      "port": 9222,
+      "request": "attach",
+      "type": "msedge",
+      "webRoot": "${workspaceFolder}/packages/web",
+      // 添加前置启动，启动web
+      // "preLaunchTask": "npm: build-only - packages/web"
+    }
+  ]
+}

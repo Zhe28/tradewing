@@ -1,0 +1,18 @@
+{
+  // 推荐的扩展
+  "recommendations": [
+    // 单行显示错误
+    "usernamehw.errorlens",
+    // Vue
+    "Vue.volar",
+    // ESLint
+    "dbaeumer.vscode-eslint",
+    // EditorConfig
+    "EditorConfig.EditorConfig",
+    // Prettier
+    "esbenp.prettier-vscode",
+    // Codeium Windsurf
+    // "codeium.windsurf",
+    "yoavbls.pretty-ts-errors"
+  ],
+}
