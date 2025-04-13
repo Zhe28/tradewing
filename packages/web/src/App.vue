@@ -47,6 +47,11 @@ const menus = ref<ItemType[]>([
     icon: h(MailOutlined),
     label: '供应商',
   },
+  {
+    key: '/invoice',
+    icon: h(MailOutlined),
+    label: '发票',
+  },
 ])
 // 侧边栏折叠状态
 const collapsed = ref<boolean>(false)
